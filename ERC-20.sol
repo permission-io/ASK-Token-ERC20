@@ -8,21 +8,20 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 contract MyToken is ERC20, ERC20Burnable, AccessControl {
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     
-    uint256 private _maxSupply = 1e29;
+    uint256 private constant _maxSupply = 1e29;
 
 
     constructor() ERC20("Permission Token", "ASK") {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _grantRole(MINTER_ROLE, msg.sender);
     }
 
-     function getMaxSupply() public view returns (uint256) {
+    function getMaxSupply() public view returns (uint256) {
          return _maxSupply;
      }
 
 
     function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {
-        require(totalSupply() + amount <= getMaxSupply(), "Max Supply Exceeded");
+        require(totalSupply() + amount <= _maxSupply, "Max Supply Exceeded");
         _mint(to, amount);
     }
 }
