@@ -15,7 +15,7 @@ contract MyToken is ERC20, ERC20Burnable, AccessControl {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
-    function getMaxSupply() public view returns (uint256) {
+    function getMaxSupply()  public pure returns  (uint256) {
          return _maxSupply;
      }
 
